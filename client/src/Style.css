@@ -1,0 +1,20 @@
+label {
+  font-weight: 550;
+}
+
+/* CSS */
+.button-8 {
+  background-color: #f2c8e0;
+  border-radius: 3px;
+  border: 3px solid "#f84992";
+  box-shadow: rgba(255, 255, 255, 0.7) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: "#f84992";
+  cursor: pointer;
+  display: inline-block;
+
+ 
+  
+}
+
+

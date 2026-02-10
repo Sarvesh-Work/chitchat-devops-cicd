@@ -1,0 +1,43 @@
+
+# docker compose for Local Development / Testing only
+# Purpose: Run client + server locally to verify app works
+# Not  for CI/CD 
+
+
+services:
+
+  
+  # Backend Service
+  server:
+    build:
+      context: ./server          
+      dockerfile: Dockerfile
+    container_name: chitchat-backend
+
+    environment:
+      PORT: ${PORT}
+      MONGODB_URL: ${MONGODB_URL}
+      JWT_KEY: ${JWT_KEY}
+      LIMIT_PER_PAGE: ${LIMIT_PER_PAGE}
+      FRONTEND_PORT: ${FRONTEND_PORT}
+      CLOUD_NAME: ${CLOUD_NAME}
+      API_KEY: ${API_KEY}
+      API_SECRET: ${API_SECRET}
+
+    ports:
+      - "${PORT}:8080"         
+    restart: unless-stopped     
+
+  # Frontend Service
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: chitchat-frontend
+
+    depends_on:
+      - server                  
+    ports:
+      - "3000:80"         
+    restart: unless-stopped
+
