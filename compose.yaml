@@ -1,16 +1,12 @@
-
 # docker compose for Local Development / Testing only
 # Purpose: Run client + server locally to verify app works
-# Not  for CI/CD 
-
+# Not  for CI/CD
 
 services:
-
-  
   # Backend Service
   server:
     build:
-      context: ./server          
+      context: ./server
       dockerfile: Dockerfile
     container_name: chitchat-backend
 
@@ -25,8 +21,8 @@ services:
       API_SECRET: ${API_SECRET}
 
     ports:
-      - "${PORT}:8080"         
-    restart: unless-stopped     
+      - "${PORT}:8080"
+    restart: unless-stopped
 
   # Frontend Service
   client:
@@ -36,8 +32,7 @@ services:
     container_name: chitchat-frontend
 
     depends_on:
-      - server                  
+      - server
     ports:
-      - "3000:80"         
+      - "3000:80"
     restart: unless-stopped
-

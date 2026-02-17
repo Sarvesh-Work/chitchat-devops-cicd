@@ -11,7 +11,7 @@ import userRoutes from "./routes/user.routes.js";
 import { setupSocketEvents } from "./Socket/index.js";
 
 const corsOptions = {
-  origin: ["http://localhost:5173", process.env.FRONTEND_PORT],
+  origin: ["http://localhost:5173", process.env.FRONTEND_URL],
   credentials: true,
 };
 
@@ -32,8 +32,8 @@ function setupMiddleware(app) {
 
 // Setup routes
 function setupRoutes(app) {
-  app.use("/user", userRoutes);
-  app.use("/chat", chatRoutes);
+  app.use("/api/user", userRoutes);
+  app.use("/api/chat", chatRoutes);
 }
 
 // Handle socket authentication

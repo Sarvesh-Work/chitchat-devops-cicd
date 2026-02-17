@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  namespace: chitchat
+  name: backend-deployment-chitchat
+  labels:
+    app: backend
+
+spec:
+  replicas: 2
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+
+  selector:
+    matchLabels:
+      app: backend
+
+  template:
+    metadata:
+      labels:
+        app: backend
+
+    spec:
+      containers:
+        - image: sarvesh9075/backend-test:02
+          imagePullPolicy: IfNotPresent
+          name: backend
+          ports:
+            - containerPort: 8080
+
+          envFrom:
+            - configMapRef:
+                name: backend-config
+  # Secret is added directly using Kubernetes Secret for simplicity.
+  # In production environments, tools like HashiCorp Vault or AWS Secrets Manager
+  # are used for better security and secret management.
+  #         - secretRef:
+  #             name: backend-secret
