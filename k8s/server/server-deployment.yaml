@@ -5,7 +5,7 @@ metadata:
   namespace: chitchat
   name: backend-deployment-chitchat
   labels:
-    app: backend
+    app: chitchat-backend
 
 spec:
   replicas: 2

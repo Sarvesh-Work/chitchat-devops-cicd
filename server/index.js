@@ -2,8 +2,11 @@ import { v2 as cloudinary } from "cloudinary";
 import dotenv from "dotenv";
 import { app, server } from "./app.js";
 import dbConnection from "./utils/dbConnection.js";
+import client from "prom-client";
 
 dotenv.config({ path: "./.env" });
+
+client.collectDefaultMetrics();
 
 const startServer = async () => {
   try {
@@ -19,6 +22,11 @@ const startServer = async () => {
     process.exit(1);
   }
 };
+
+app.get("/metrics", async (req, res) => {
+  res.set("Content-Type", client.register.contentType);
+  res.end(await client.register.metrics());
+});
 
 // Basic route
 app.get("/", (req, res) => {

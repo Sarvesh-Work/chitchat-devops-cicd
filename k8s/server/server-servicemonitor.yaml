@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: chitchat-monitor
+  namespace: chitchat
+  labels:
+      release: monitoring
+
+spec:
+  selector:
+    matchLabels:
+      app: chitchat-backend
+  namespaceSelector:
+    matchNames:
+      -chitchat
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s
