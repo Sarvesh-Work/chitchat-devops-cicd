@@ -6,7 +6,7 @@ metadata:
   namespace: chitchat
 
 spec:
-  ingressClassName: nginx
+  ingressClassName: nginx # --- todo using aws alb ingress controller in eks deployment
 
   rules:
     - http:
