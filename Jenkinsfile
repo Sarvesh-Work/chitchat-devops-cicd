@@ -70,7 +70,7 @@ pipeline {
                 echo 'Docker image tag creation'
                 script {
                     env.VERSION = sh(
-                    script: 'git describe --tags --abbrev=0',
+                    script: 'git describe --tags --abbrev=0 || echo "v1.0.0"',
                     returnStdout: true
                     ).trim()
 
@@ -97,6 +97,13 @@ pipeline {
                 dir('server') {
                     sh "docker build -t ${DOCKER_HUB_USERNAME}/${PROJECT_NAME}-backend:${DOCKER_IMAGE_TAG}  ."
                 }
+            }
+        }
+
+        stage('Trivy: Image check') {
+            steps {
+                sh "trivy image ${DOCKER_HUB_USERNAME}/${PROJECT_NAME}-frontend:${DOCKER_IMAGE_TAG}"
+                sh "trivy image ${DOCKER_HUB_USERNAME}/${PROJECT_NAME}-backend:${DOCKER_IMAGE_TAG}"
             }
         }
 
