@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        GITHUB_REPO_URL = 'https://github.com/Sarvesh-Work/ci-cd-jenkins-next.js.git'
+        GITHUB_REPO_URL = 'https://github.com/Sarvesh-Work/chitchat-devops-cicd.git'
         GITHUB_REPO_BRANCH = 'main'
         SONAR_HOME = tool 'sonar-scanner'
         DOCKER_HUB_USERNAME = 'sarvesh9075'
