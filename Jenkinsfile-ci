@@ -33,11 +33,13 @@ pipeline {
         stage('OWASP: Dependency check') {
             steps {
                 echo 'OWASP dependency check started'
+
                 dependencyCheck(
-                    additionalArguments: '--scan ./',
-                    odcInstallation: 'dependency-check-OWASP'
-                )
-                dependencyCheckPublisher pattern: '**/dependency-check-report.html'
+            additionalArguments: '--scan ./ --format ALL',
+            odcInstallation: 'dependency-check-OWASP'
+            )
+
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
         }
 
