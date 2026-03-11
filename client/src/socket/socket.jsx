@@ -8,7 +8,14 @@ const SocketContext = createContext();
 export const useSocket = () => useContext(SocketContext);
 
 export const SocketProvider = ({ children }) => {
-  const socket = useMemo(() => io(server, { withCredentials: true }), []);
+  const socket = useMemo(
+    () =>
+      io("/", {
+        withCredentials: true,
+        transports: ["websocket"],
+      }),
+    [],
+  );
 
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
