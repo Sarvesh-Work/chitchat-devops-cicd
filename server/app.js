@@ -17,7 +17,13 @@ const corsOptions = {
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server, { cors: corsOptions });
+const io = new Server(server, {
+  path: "/socket.io",
+  cors: {
+    origin: true,
+    credentials: true,
+  },
+});
 
 app.set("io", io);
 const userSocketId = new Map();

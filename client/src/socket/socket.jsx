@@ -11,8 +11,9 @@ export const SocketProvider = ({ children }) => {
   const socket = useMemo(
     () =>
       io("/", {
-        withCredentials: true,
+        path: "/socket.io",
         transports: ["websocket"],
+        withCredentials: true,
       }),
     [],
   );
