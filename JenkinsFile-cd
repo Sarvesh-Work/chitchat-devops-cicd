@@ -1,0 +1,80 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_HUB_USERNAME = 'sarvesh9075'
+        PROJECT_NAME = 'chitchat-chat-app'
+        GITHUB_REPO_URL = 'https://github.com/Sarvesh-Work/chitchat-devops-cicd.git'
+        GITHUB_REPO_BRANCH = 'main'
+    }
+
+    parameters {
+        string(name:'DOCKER_IMAGE_TAG', defaultValue:'', description:'Docker tag of the image built by the CI job')
+    }
+
+    stages {
+        stage('Cleanup workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+
+        stage('Git: Code checkout') {
+            steps {
+                git url: "${GITHUB_REPO_URL}", branch: "${GITHUB_REPO_BRANCH}"
+            }
+        }
+
+        stage('Kubernetes: Update Kubernetes manifest') {
+            steps {
+                dir('k8s/client') {
+                    sh """
+                    sed -i "s|image:.*|image: ${DOCKER_HUB_USERNAME}/${PROJECT_NAME}-frontend:${DOCKER_IMAGE_TAG}|g" client-deployment.yaml
+                    """
+                }
+
+                dir('k8s/server') {
+                    sh """
+                    sed -i "s|image:.*|image: ${DOCKER_HUB_USERNAME}/${PROJECT_NAME}-backend:${DOCKER_IMAGE_TAG}|g" server-deployment.yaml
+                    """
+                }
+            }
+        }
+
+        stage('Git: push updated code') {
+            steps {
+                withCredentials([gitUsernamePassword(credentialsId:'github-token', gitToolName:'Default')]) {
+                    sh '''
+                    echo "Adding changes to git"
+                    git add .
+
+                    echo "Commiting changes"
+                    git commit -m "Updated manifest for image tag"
+
+                    echo "Pushing changes to github"
+                    git push ${GITHUB_REPO_URL} ${GITHUB_REPO_BRANCH}
+
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            slackSend(
+                channel:'#devops-alert',
+                color:'good',
+                message:"✅ Build SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}\\n${env.BUILD_URL}"
+            )
+        }
+
+        failure {
+            slackSend(
+                channel:'#devops-alert',
+                color:'danger',
+                message:"❌ Build FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}\\n${env.BUILD_URL}"
+            )
+        }
+    }
+}

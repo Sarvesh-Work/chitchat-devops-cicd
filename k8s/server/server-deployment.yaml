@@ -33,12 +33,12 @@ spec:
           ports:
             - containerPort: 8080
 
-          envFrom:
+          envFrom:              
             - configMapRef:
                 name: backend-config
             - secretRef:
                 name: backend-secret
-
+                
 # secret is created manually in the cluster using kubectl.
 # This is done intentionally to avoid committing secret YAML files to GitHub.
 # The deployment references the existing secret using secretRef.

@@ -84,7 +84,7 @@ pipeline {
                     returnStdout: true
                     ).trim()
 
-                    env.DOCKER_IMAGE_TAG = "${env.VERSION}-${env.GIT_SHA}"
+                    env.DOCKER_IMAGE_TAG = "${env.VERSION}-${env.GIT_SHA}" // i am adding same  image tag to frontend and  backend
 
                     echo "Docker Tag: ${env.DOCKER_IMAGE_TAG}"
                 }
@@ -121,6 +121,15 @@ pipeline {
                     sh "docker push ${DOCKER_HUB_USERNAME}/${PROJECT_NAME}-frontend:${DOCKER_IMAGE_TAG}"
                     sh "docker push ${DOCKER_HUB_USERNAME}/${PROJECT_NAME}-backend:${DOCKER_IMAGE_TAG}"
             }
+        }
+    }
+
+    post {
+        success {
+            archiveArtifacts artifacts: '*.xml', followSymlinks: false
+            build(job: 'Chitchat-cd', parameters: [
+                string(name:'DOCKER_IMAGE_TAG', value:"${DOCKER_IMAGE_TAG}")
+            ])
         }
     }
 }
