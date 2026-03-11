@@ -127,9 +127,10 @@ pipeline {
     post {
         success {
             archiveArtifacts artifacts: '*.xml', followSymlinks: false
-            build(job: 'Chitchat-cd', parameters: [
-                string(name:'DOCKER_IMAGE_TAG', value:"${DOCKER_IMAGE_TAG}")
-            ])
+
+            build job: 'Chitchat-cd', parameters: [
+            string(name: 'DOCKER_IMAGE_TAG', value: "${env.DOCKER_IMAGE_TAG}")
+        ]
         }
     }
 }
