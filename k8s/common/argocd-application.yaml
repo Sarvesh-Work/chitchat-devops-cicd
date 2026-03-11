@@ -2,16 +2,22 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: chitchat
-  namespace: argocd
+  namespace: argo
 
 spec:
+  project: default
+
   source:
     repoURL: https://github.com/Sarvesh-Work/chitchat-devops-cicd.git
-    targetRevision: HEAD
+    targetRevision: main
     path: k8s
+    directory:
+      recurse: true
+
   destination:
     server: https://kubernetes.default.svc
     namespace: chitchat
+
   syncPolicy:
     automated:
       prune: true
