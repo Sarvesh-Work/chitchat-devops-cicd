@@ -27,7 +27,7 @@ spec:
 
     spec:
       containers:
-        - image: sarvesh9075/chitchat-chat-app-backend:v1.0.0-5cf0e7e
+        - image: sarvesh9075/chitchat-chat-app-backend:v1.0.0-1fccacb
           imagePullPolicy: IfNotPresent
           name: backend
           ports:
