@@ -36,8 +36,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: backend-config
-  # Secret is added directly using Kubernetes Secret for simplicity.
-  # In production environments, tools like HashiCorp Vault or AWS Secrets Manager
-  # are used for better security and secret management.
-  #         - secretRef:
-  #             name: backend-secret
+            - secretRef:
+                name: backend-secret
+
+# secret is created manually in the cluster using kubectl.
+# This is done intentionally to avoid committing secret YAML files to GitHub.
+# The deployment references the existing secret using secretRef.
+
