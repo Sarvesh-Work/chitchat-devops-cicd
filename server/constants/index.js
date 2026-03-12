@@ -1,10 +1,17 @@
 export const DB_Name = "ChitChat";
+// export const cookieOptions = {
+//   maxAge: 15 * 24 * 60 * 60 * 1000,
+//   sameSite: "none",
+//   httpOnly: true,
+//   secure: true,
+// };
+
 export const cookieOptions = {
   maxAge: 15 * 24 * 60 * 60 * 1000,
-  sameSite: "none",
+  sameSite: "lax",
   httpOnly: true,
-  secure: true,
-};
+  secure: false, 
+};   /// to set cookie on http
 export const saltRounds = 10;
 export const appName = "ChitChat";
 export const REFETCH_CHATS = "REFETCH_CHATS";
