@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: sarvesh9075/chitchat-chat-app-frontend:v1.0.0-23c530c
+          image: sarvesh9075/chitchat-chat-app-frontend:v1.0.0-8b8b466
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80 
