@@ -34,7 +34,7 @@ managedNodeGroups:
     privateNetworking: true
 
     volumeSize: 20
-    amiFamily: AmazonLinux2
+    amiFamily: AmazonLinux2023
 
     labels:
       role: worker
