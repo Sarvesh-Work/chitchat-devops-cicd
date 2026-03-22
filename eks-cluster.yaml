@@ -1,0 +1,44 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: chitchat-eks-cluster
+  region: us-east-1
+  version: "1.35"
+
+vpc:
+  id: vpc-00d466bfa3763d844
+  subnets:
+    private:
+      us-east-1a:
+        id: subnet-03b5c77be117d3518
+      us-east-1b:
+        id: subnet-079ad0650b9998dfe
+    public:
+      us-east-1a:
+        id: subnet-0b297eaf96e0f15bc
+      us-east-1b:
+        id: subnet-0acaf5d492fc52811
+
+ima:
+  withOIDC: true
+
+managedNodeGroups:
+  - name: private-nodes
+    instanceType: t3.medium
+
+    desiredCapacity: 2
+    minSize: 1
+    maxSize: 2
+
+    privateNetworking: true
+
+    volumeSize: 20
+    amiFamily: AmazonLinux2
+
+    labels:
+      role: worker
+
+    tags:
+      nodegroup-role: private-worker
+ 
