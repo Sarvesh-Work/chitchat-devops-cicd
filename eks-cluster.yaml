@@ -14,7 +14,7 @@ vpc:
         id: subnet-03b5c77be117d3518
       us-east-1b:
         id: subnet-079ad0650b9998dfe
-    public:
+    public: 
       us-east-1a:
         id: subnet-0b297eaf96e0f15bc
       us-east-1b:
