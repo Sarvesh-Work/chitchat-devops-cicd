@@ -30,15 +30,23 @@ spec:
         - image: sarvesh9075/chitchat-chat-app-backend:v1.0.0-23c530c
           imagePullPolicy: IfNotPresent
           name: backend
+
           ports:
             - containerPort: 8080
 
-          envFrom:              
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "300m"
+              memory: "256Mi"
+
+          envFrom:
             - configMapRef:
                 name: backend-config
             - secretRef:
                 name: backend-secret
-                
 # secret is created manually in the cluster using kubectl.
 # This is done intentionally to avoid committing secret YAML files to GitHub.
 # The deployment references the existing secret using secretRef.
