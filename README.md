@@ -209,6 +209,17 @@ The project is deployed on AWS using a secure and scalable architecture:
 This setup ensures a secure, isolated, and production-like environment for deploying the application.
 
 ---
+<br />
+
+##  Database Setup
+
+This project uses **MongoDB Atlas** as the database instead of deploying MongoDB inside the Kubernetes cluster.
+
+MongoDB Atlas is a managed cloud database service, which is used here to keep the project focused on application deployment, CI/CD, GitOps, and Kubernetes orchestration.
+
+This approach simplifies database management while still providing a production-like setup for the application.
+
+---
 
 <br />
 
@@ -284,9 +295,9 @@ This screenshot shows the ArgoCD application tree, including:
 
 All resources are managed using GitOps, ensuring consistency between Git and the cluster.
 
-> ⚠️ **Note:** The `backend-secret.yaml` is intentionally not committed to GitHub for security reasons.  
+> ⚠️ **Note:** The `server-secret.yaml` file is intentionally not committed to GitHub for security reasons.  
 > It is applied manually in the cluster, which may cause ArgoCD to show an `OutOfSync` or `Sync Failed` status for that specific resource.  
-> This is expected behavior and reflects secure handling of sensitive data in real-world deployments.
+
 
 ---
 
